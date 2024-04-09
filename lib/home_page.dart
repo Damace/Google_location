@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:vms/splash_screen.dart';
 import 'package:vms/users_controller.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -35,12 +36,13 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-         body: SafeArea(
+          body: SafeArea(
             child: Obx(() => pointController.users.isNotEmpty
                 ? GoogleMap(
                     onMapCreated: _onMapCreated,
                     initialCameraPosition: CameraPosition(
-                      target: LatLng(pointController.users.first.lat,pointController.users.first.lng),
+                      target: LatLng(pointController.users.first.lat,
+                          pointController.users.first.lng),
                       zoom: 14.0,
                     ),
                     markers: Set.from(pointController.markers)
@@ -49,6 +51,53 @@ class _MyHomePageState extends State<MyHomePage> {
                 : Center(
                     child: CircularProgressIndicator(),
                   )),
+          ),
+          bottomNavigationBar: BottomNavigationBar(
+            elevation: 50,
+            backgroundColor: Colors.white,
+            selectedLabelStyle: TextStyle(
+              color: Colors.white,
+            ),
+            unselectedLabelStyle: TextStyle(
+              color: Colors.white,
+            ),
+            items: [
+              BottomNavigationBarItem(
+                  icon: InkWell(
+                    onTap: () {
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => MyHomePage(
+                                    title: '',
+                                  )
+                              // builder: (context) =>Register()
+
+                              ));
+                    },
+                    child: Icon(
+                      Icons.home,
+                      color: Color.fromARGB(255, 21, 139, 236),
+                    ),
+                  ),
+                  label: 'Home'),
+              BottomNavigationBarItem(
+                  icon: InkWell(
+                    onTap: () {
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(builder: (context) => SplashPage()
+                              // builder: (context) =>Register()
+
+                              ));
+                    },
+                    child: Icon(
+                      Icons.map_outlined,
+                      color: Color.fromARGB(255, 21, 139, 236),
+                    ),
+                  ),
+                  label: 'Refresh map'),
+            ],
           )),
     );
   }

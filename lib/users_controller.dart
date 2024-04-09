@@ -39,11 +39,11 @@ class UserController extends GetxController {
     users.forEach((element) {
       markers.add(
         Marker(
-          markerId: MarkerId(element.title.toString()),
+          markerId: MarkerId(element.title),
           icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
           position: LatLng(element.lat,element.lng),
           infoWindow:
-              InfoWindow(title: element.fullName, snippet: element.phoneNumber.toString()),
+              InfoWindow(title: element.title, snippet: element.phoneNumber.toString()),
               onTap: (){print('marker tapped');}
         ),
       );
